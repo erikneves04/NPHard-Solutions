@@ -47,25 +47,24 @@ def TimeoutHandler(signum, frame):
     """
     raise TimeoutError("Tempo limite de execução excedido.")
 
-def ExecuteWithTimeout(algorithm_func, args, time_limit):
+def ExecuteWithTimeout(algorithm_func, problem_path, time_limit):
     """
     Executa a função do algoritmo com limite de tempo.
 
     :param algorithm_func: Função do algoritmo a ser executada.
-    :param args: Argumentos para o algoritmo.
-    :param time_limit: Tempo limite em segundos.
+    :param problem_path: Caminho para o arquivo do problema.
+    :param time_limit: Tempo limite em minutos.
     """
     signal.signal(signal.SIGALRM, TimeoutHandler)
     signal.alarm(time_limit * 60)
 
     try:
-        algorithm_func(args)
+        algorithm_func(problem_path)
     except TimeoutError as e:
         print(e)
         # TODO: Tratar o erro de timeout (tempo limite de execução excedido)
     finally:
         signal.alarm(0)
-
 
 def main():
     """
@@ -76,17 +75,14 @@ def main():
     algorithm_option = args.algorithm
 
     if algorithm_option == Algorithms.BRANCHANDBOUND:
-        pass
-        # Executamos o algoritmo de branch and bound
-        ExecuteWithTimeout(BranchAndBound.solve, args.problem_path, args.max_minutes)
+        model = BranchAndBound()
+        ExecuteWithTimeout(model.solve, args.problem_path, args.max_minutes)
     elif algorithm_option == Algorithms.CHRISTOFIDES:
-        pass
-        # Executamos o algoritmo de christofides
-        ExecuteWithTimeout(Christofides.solve, args.problem_path, args.max_minutes)
+        model = Christofides()
+        ExecuteWithTimeout(model.solve, args.problem_path, args.max_minutes)
     elif algorithm_option == Algorithms.TWICEAROUNDTHETREE:
-        pass
-        # Executamos o algoritmo de twice around the tree
-        ExecuteWithTimeout(TwiceAroundTheTree.solve, args.problem_path, args.max_minutes)
+        model = TwiceAroundTheTree()
+        ExecuteWithTimeout(model.solve, args.problem_path, args.max_minutes)
 
 if __name__ == "__main__":
     main()
