@@ -1,4 +1,4 @@
 class ProblemManager:
-    def ReadProblem(path):
+    def ReadProblem(self, path):
         # TODO: Implementar a leitura dos problemas
         pass
