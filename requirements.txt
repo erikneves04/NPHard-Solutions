@@ -1,2 +1,4 @@
 pytest
 argparse
+numpy
+networkx
