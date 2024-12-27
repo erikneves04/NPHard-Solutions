@@ -1,69 +1,139 @@
 from ProblemManager.ProblemManager import ProblemManager
 import numpy as np
 import heapq
+import math
 
 BESTCOST = float('inf')
-
 class BranchAndBound:
     def __init__(self, graph, numNodes):
         self.problemManager = ProblemManager()
         self.graph = graph
         self.numNodes = numNodes
         self.solution = None
-        self.Cost = 0        
+        self.bestCost  = BESTCOST     
+        self.prunes = 0
+        self.iter = 0
         
-    def bound(self, partialSolution, costPartialSolution):
-        
-        
+    def bound(self, partialSolution, costPartialSolution):      
         listMinCosts = []
-        sumTwoMin = []
+        usedCosts = {v: set() for v in range(self.numNodes)}  
+        # print(f"Partial Solution: {partialSolution}")
+        # print(f"Cost Partial Solution: {costPartialSolution}")
+
+        for idx in range(len(partialSolution)):
+            current = partialSolution[idx]
+            prev = partialSolution[idx - 1] if idx > 0 else None
+            next_ = partialSolution[idx + 1] if idx + 1 < len(partialSolution) else None
+
+            # print(f"Processing vertex {current}, prev: {prev}, next: {next_}")
+            if prev is not None:
+                costPrev = float(self.graph[current, prev])  
+                listMinCosts.append(costPrev)
+                usedCosts[current].add(costPrev)  
+                # print(f"Cost to previous vertex ({prev}): {costPrev}")
+            if next_ is not None:
+                costNext = float(self.graph[current, next_]) 
+                listMinCosts.append(costNext)
+                usedCosts[current].add(costNext)  
+                # print(f"Cost to next vertex ({next_}): {costNext}")
+
         for i in range(self.numNodes):
-            self.graph[i, i] = BESTCOST
-            
-            if i in partialSolution:
+            if len(usedCosts[i]) >= 2:
+                # print(f"Vertex {i} fully processed, skipping.")
+                continue  
+
+            # print(f"Processing remaining vertex {i}.")
+            row = self.graph[i, :]  
+            row[i] = BESTCOST 
+
+            validCosts = [float(cost) for cost in row if cost not in usedCosts[i]]
+            if not validCosts:
+                # print(f"No valid costs remaining for vertex {i}. Skipping.")
                 continue
-                
-            # print(np.partition(self.graph[i, :],2)[:2])        
-            sumTwoMin = np.sum(np.partition(self.graph[i, :],2)[:2])
-            # print(sumTwoMin)
-            listMinCosts.append(float(sumTwoMin)) 
-            
-        # print(listMinCosts)          
+
+            if len(usedCosts[i]) == 1:
+                minCost = np.partition(validCosts, 0)[0]
+            else:
+                minCost = np.partition(validCosts, 1)[:2]
+
+            if isinstance(minCost, np.ndarray):
+                for cost in minCost:
+                    usedCosts[i].add(cost)
+                sumCosts = float(np.sum(minCost)) 
+            else:
+                usedCosts[i].add(minCost)
+                sumCosts = float(minCost)
+
+            listMinCosts.append(sumCosts)
+            # print(f"Valid costs for vertex {i}: {validCosts}")
+            # print(f"Smallest costs for vertex {i}: {minCost}")
+            # print(f"Sum of costs added for vertex {i}: {sumCosts}")
+
+        # print(f"\nList of minimum costs: {listMinCosts}")
+        bound = math.ceil(np.sum(listMinCosts) / 2) # Converte o resultado final
+        # print(f"Calculated bound: {bound}")
+        return bound
         
-        bound = sum(listMinCosts)/2 + costPartialSolution
-        print(bound)
+    def brandAndBound(self, partialSolution, costPartialSolution):
+        self.iter += 1
+        print(f"Partial Solution: {partialSolution}")
+        
+        if len(partialSolution) == self.numNodes:
+            startVertex = partialSolution[0]
+            endVertex = partialSolution[-1]
+            totalCost = costPartialSolution + self.graph[endVertex, startVertex]
+            
+            if totalCost < self.bestCost:
+                self.bestCost = totalCost
+                self.solution = partialSolution[:]
+            else:
+                print("podou")
+                self.prunes += 1
+            return
+                    
+        for i in range(self.numNodes):
+            if i in partialSolution:
+                self.prunes += 1
+            else:
+                partialSolution.append(i)  
+                lastVertex = partialSolution[-2] if len(partialSolution) > 1 else partialSolution[-1]
+                # print(f"Partial Solution apos adicionar {i}: {partialSolution}")
+                # print(f"lastVertex: {lastVertex}")
+                newCost = costPartialSolution + self.graph[lastVertex, i]  
+                # print(f"newCost: {newCost}")
+                bound = self.bound(partialSolution, newCost,)
+                    
+                if bound < self.bestCost:
+                    self.brandAndBound(partialSolution, newCost)
+                else:
+                    self.prunes += 1
+                    
+                partialSolution.pop()       
         
     def solve(self, problem_path):
-        problem = self.problemManager.ReadProblem(problem_path)
+        # problem = self.problemManager.ReadProblem(problem_path)
 
-        # TODO: Implementar esse algoritmo
+        self.brandAndBound([], 0)  
+        
+        self.solution.append(self.solution[0])
+        print(f"partial solutions: {self.iter}")
 
-        return None
+        return self.solution, self.bestCost, self.prunes
     
 def main():
-    """
-    Função principal para testar a implementação do Branch and Bound.
-    """
-    # Matriz de pesos (simétrica) com 10 vértices
     graph = np.array([
-        [0, 29, 20, 21, 16, 31, 100, 12, 4, 31],
-        [29, 0, 15, 17, 28, 40, 72, 31, 29, 40],
-        [20, 15, 0, 12, 15, 25, 81, 22, 13, 31],
-        [21, 17, 12, 0, 11, 15, 92, 18, 17, 23],
-        [16, 28, 15, 11, 0, 15, 94, 24, 14, 26],
-        [31, 40, 25, 15, 15, 0, 96, 30, 29, 13],
-        [100, 72, 81, 92, 94, 96, 0, 60, 60, 70],
-        [12, 31, 22, 18, 24, 30, 60, 0, 16, 22],
-        [4, 29, 13, 17, 14, 29, 60, 16, 0, 28],
-        [31, 40, 31, 23, 26, 13, 70, 22, 28, 0]
-    ], dtype=float)  
+        [0, 10, 15, 20],
+        [10, 0, 35, 25],
+        [15, 35, 0, 30],
+        [20, 25, 30, 0]
+    ], dtype=float) 
 
-    num_nodes = len(graph)
+    Solve = BranchAndBound(graph, 4)
 
-    # Instanciando o Branch and Bound
-    Solve = BranchAndBound(graph, num_nodes)
-
-    Solve.bound([-1,-1,-1], 0)
+    bestSolution, bestCost, prunes = Solve.solve(0)
+    print(f"O melhor caminho é: {bestSolution}")
+    print(f"O melhor custo é: {bestCost}")
+    print(f"Número de podas feitas: {prunes}")
 
 
 if __name__ == "__main__":
