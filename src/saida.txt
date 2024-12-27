@@ -1,0 +1,491 @@
+
+[DEBUG] Explorando a solução parcial: ['a']
+[DEBUG] Adicionando o vértice ['b'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b']
+[DEBUG] Custo da solução parcial: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0}, 2: set(), 3: set(), 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: 6.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: [1. 2.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 14
+[DEBUG] Limite 14 é menor que o melhor custo inf. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b']
+[DEBUG] Adicionando o vértice ['c'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'c']
+[DEBUG] Custo da solução parcial: 9.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 6.0, 6.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 6.0}, 2: {6.0}, 3: set(), 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: 1.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 16
+[DEBUG] Limite 16 é menor que o melhor custo inf. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'c']
+[DEBUG] Adicionando o vértice ['d'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'c', 'd']
+[DEBUG] Custo da solução parcial: 13.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 6.0, 6.0, 4.0, 4.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 6.0}, 2: {4.0, 6.0}, 3: {4.0}, 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 18
+[DEBUG] Limite 18 é menor que o melhor custo inf. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'c', 'd']
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'c', 'd', 'e']
+[DEBUG] Custo da solução parcial: 16.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 6.0, 6.0, 4.0, 4.0, 3.0, 3.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 6.0}, 2: {4.0, 6.0}, 3: {3.0, 4.0}, 4: {3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 2.0
+[DEBUG] Limite (bound) calculado: 18
+[DEBUG] Limite 18 é menor que o melhor custo inf. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'c', 'd', 'e']
+[DEBUG] Nova melhor solução encontrada: ['a', 'b', 'c', 'd', 'e'] com custo: 24.0
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'c', 'e']
+[DEBUG] Custo da solução parcial: 11.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 6.0, 6.0, 2.0, 2.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 6.0}, 2: {2.0, 6.0}, 3: set(), 4: {2.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 3.0
+[DEBUG] Limite (bound) calculado: 17
+[DEBUG] Limite 17 é menor que o melhor custo 24.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'c', 'e']
+[DEBUG] Adicionando o vértice ['d'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'c', 'e', 'd']
+[DEBUG] Custo da solução parcial: 14.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['b'] para ['c']: 6.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['e'] para ['d']: 3.0
+[DEBUG] Custo de ['e'] para ['d']: 3.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 6.0, 6.0, 2.0, 2.0, 3.0, 3.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 6.0}, 2: {2.0, 6.0}, 3: {3.0}, 4: {2.0, 3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: 4.0
+[DEBUG] O nó ['e'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Limite (bound) calculado: 17
+[DEBUG] Limite 17 é menor que o melhor custo 24.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'c', 'e', 'd']
+[DEBUG] Nova melhor solução encontrada: ['a', 'b', 'c', 'e', 'd'] com custo: 19.0
+[DEBUG] Adicionando o vértice ['d'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'd']
+[DEBUG] Custo da solução parcial: 10.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 7.0, 7.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 7.0}, 2: set(), 3: {7.0}, 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: [1. 2.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 16
+[DEBUG] Limite 16 é menor que o melhor custo 19.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'd']
+[DEBUG] Adicionando o vértice ['c'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'd', 'c']
+[DEBUG] Custo da solução parcial: 14.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['d'] para ['c']: 4.0
+[DEBUG] Custo de ['d'] para ['c']: 4.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 7.0, 7.0, 4.0, 4.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 7.0}, 2: {4.0}, 3: {4.0, 7.0}, 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: 1.0
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 18
+[DEBUG] Limite 18 é menor que o melhor custo 19.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'd', 'c']
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'd', 'c', 'e']
+[DEBUG] Custo da solução parcial: 16.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['d'] para ['c']: 4.0
+[DEBUG] Custo de ['d'] para ['c']: 4.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 7.0, 7.0, 4.0, 4.0, 2.0, 2.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 7.0}, 2: {2.0, 4.0}, 3: {4.0, 7.0}, 4: {2.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 3.0
+[DEBUG] Limite (bound) calculado: 18
+[DEBUG] Limite 18 é menor que o melhor custo 19.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'd', 'c', 'e']
+[DEBUG] Podada - Não foi encontrada uma solução melhor.
+1
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'd', 'e']
+[DEBUG] Custo da solução parcial: 13.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 7.0, 7.0, 3.0, 3.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 7.0}, 2: set(), 3: {3.0, 7.0}, 4: {3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: [1. 2.]
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 2.0
+[DEBUG] Limite (bound) calculado: 16
+[DEBUG] Limite 16 é menor que o melhor custo 19.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'd', 'e']
+[DEBUG] Adicionando o vértice ['c'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'd', 'e', 'c']
+[DEBUG] Custo da solução parcial: 15.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['b'] para ['d']: 7.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Custo de ['e'] para ['c']: 2.0
+[DEBUG] Custo de ['e'] para ['c']: 2.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 7.0, 7.0, 3.0, 3.0, 2.0, 2.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {3.0, 7.0}, 2: {2.0}, 3: {3.0, 7.0}, 4: {2.0, 3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: 1.0
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['e'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Limite (bound) calculado: 16
+[DEBUG] Limite 16 é menor que o melhor custo 19.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'b', 'd', 'e', 'c']
+[DEBUG] Nova melhor solução encontrada: ['a', 'b', 'd', 'e', 'c'] com custo: 16.0
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'b', 'e']
+[DEBUG] Custo da solução parcial: 12.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['a'] para ['b']: 3.0
+[DEBUG] Custo de ['b'] para ['e']: 9.0
+[DEBUG] Custo de ['b'] para ['e']: 9.0
+[DEBUG] Lista de custos mínimos até agora: [3.0, 3.0, 9.0, 9.0]
+[DEBUG] Custos utilizados: {0: {3.0}, 1: {9.0, 3.0}, 2: set(), 3: set(), 4: {9.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] O nó ['b'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: [1. 2.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 2.0
+[DEBUG] Limite (bound) calculado: 19
+[DEBUG] Podada - Limite 19 excede o melhor custo 16.0.
+2
+[DEBUG] Adicionando o vértice ['c'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c']
+[DEBUG] Custo da solução parcial: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: set(), 2: {1.0}, 3: set(), 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: [3. 6.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: 2.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 14
+[DEBUG] Limite 14 é menor que o melhor custo 16.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'c']
+[DEBUG] Adicionando o vértice ['b'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'b']
+[DEBUG] Custo da solução parcial: 7.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['b']: 6.0
+[DEBUG] Custo de ['c'] para ['b']: 6.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 6.0, 6.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: {6.0}, 2: {1.0, 6.0}, 3: set(), 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: 3.0
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 16
+[DEBUG] Podada - Limite 16 excede o melhor custo 16.0.
+3
+[DEBUG] Adicionando o vértice ['d'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'd']
+[DEBUG] Custo da solução parcial: 5.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 4.0, 4.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: set(), 2: {1.0, 4.0}, 3: {4.0}, 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: [3. 6.]
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 15
+[DEBUG] Limite 15 é menor que o melhor custo 16.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'c', 'd']
+[DEBUG] Adicionando o vértice ['b'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'd', 'b']
+[DEBUG] Custo da solução parcial: 12.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['d'] para ['b']: 7.0
+[DEBUG] Custo de ['d'] para ['b']: 7.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 4.0, 4.0, 7.0, 7.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: {7.0}, 2: {1.0, 4.0}, 3: {4.0, 7.0}, 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: 3.0
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 18
+[DEBUG] Podada - Limite 18 excede o melhor custo 16.0.
+4
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'd', 'e']
+[DEBUG] Custo da solução parcial: 8.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 4.0, 4.0, 3.0, 3.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: set(), 2: {1.0, 4.0}, 3: {3.0, 4.0}, 4: {3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: [3. 6.]
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 2.0
+[DEBUG] Limite (bound) calculado: 15
+[DEBUG] Limite 15 é menor que o melhor custo 16.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'c', 'd', 'e']
+[DEBUG] Adicionando o vértice ['b'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'd', 'e', 'b']
+[DEBUG] Custo da solução parcial: 17.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['c'] para ['d']: 4.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Custo de ['d'] para ['e']: 3.0
+[DEBUG] Custo de ['e'] para ['b']: 9.0
+[DEBUG] Custo de ['e'] para ['b']: 9.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 4.0, 4.0, 3.0, 3.0, 9.0, 9.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: {9.0}, 2: {1.0, 4.0}, 3: {3.0, 4.0}, 4: {9.0, 3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: 3.0
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['e'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Limite (bound) calculado: 20
+[DEBUG] Podada - Limite 20 excede o melhor custo 16.0.
+5
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'e']
+[DEBUG] Custo da solução parcial: 3.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 2.0, 2.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: set(), 2: {1.0, 2.0}, 3: set(), 4: {2.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: [3. 6.]
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 3.0
+[DEBUG] Limite (bound) calculado: 14
+[DEBUG] Limite 14 é menor que o melhor custo 16.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'c', 'e']
+[DEBUG] Adicionando o vértice ['b'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'e', 'b']
+[DEBUG] Custo da solução parcial: 12.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['e'] para ['b']: 9.0
+[DEBUG] Custo de ['e'] para ['b']: 9.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 2.0, 2.0, 9.0, 9.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: {9.0}, 2: {1.0, 2.0}, 3: set(), 4: {9.0, 2.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: 3.0
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] O nó ['e'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Limite (bound) calculado: 19
+[DEBUG] Podada - Limite 19 excede o melhor custo 16.0.
+6
+[DEBUG] Adicionando o vértice ['d'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'e', 'd']
+[DEBUG] Custo da solução parcial: 6.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['e'] para ['d']: 3.0
+[DEBUG] Custo de ['e'] para ['d']: 3.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 2.0, 2.0, 3.0, 3.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: set(), 2: {1.0, 2.0}, 3: {3.0}, 4: {2.0, 3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: [3. 6.]
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: 4.0
+[DEBUG] O nó ['e'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Limite (bound) calculado: 14
+[DEBUG] Limite 14 é menor que o melhor custo 16.0. Explorando mais.
+
+[DEBUG] Explorando a solução parcial: ['a', 'c', 'e', 'd']
+[DEBUG] Adicionando o vértice ['b'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'c', 'e', 'd', 'b']
+[DEBUG] Custo da solução parcial: 13.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['a'] para ['c']: 1.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['c'] para ['e']: 2.0
+[DEBUG] Custo de ['e'] para ['d']: 3.0
+[DEBUG] Custo de ['e'] para ['d']: 3.0
+[DEBUG] Custo de ['d'] para ['b']: 7.0
+[DEBUG] Custo de ['d'] para ['b']: 7.0
+[DEBUG] Lista de custos mínimos até agora: [1.0, 1.0, 2.0, 2.0, 3.0, 3.0, 7.0, 7.0]
+[DEBUG] Custos utilizados: {0: {1.0}, 1: {7.0}, 2: {1.0, 2.0}, 3: {3.0, 7.0}, 4: {2.0, 3.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: 3.0
+[DEBUG] O nó ['c'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['d'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] O nó ['e'] já tem pelo menos dois custos utilizados. Pulando.
+[DEBUG] Limite (bound) calculado: 16
+[DEBUG] Podada - Limite 16 excede o melhor custo 16.0.
+7
+[DEBUG] Adicionando o vértice ['d'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'd']
+[DEBUG] Custo da solução parcial: 5.0
+[DEBUG] Custo de ['a'] para ['d']: 5.0
+[DEBUG] Custo de ['a'] para ['d']: 5.0
+[DEBUG] Lista de custos mínimos até agora: [5.0, 5.0]
+[DEBUG] Custos utilizados: {0: {5.0}, 1: set(), 2: set(), 3: {5.0}, 4: set()}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: [3. 6.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: [1. 2.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: 3.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: [2. 3.]
+[DEBUG] Limite (bound) calculado: 16
+[DEBUG] Podada - Limite 16 excede o melhor custo 16.0.
+8
+[DEBUG] Adicionando o vértice ['e'] à solução.
+
+[DEBUG] Calculando o limite (bound) para a solução parcial: ['a', 'e']
+[DEBUG] Custo da solução parcial: 8.0
+[DEBUG] Custo de ['a'] para ['e']: 8.0
+[DEBUG] Custo de ['a'] para ['e']: 8.0
+[DEBUG] Lista de custos mínimos até agora: [8.0, 8.0]
+[DEBUG] Custos utilizados: {0: {8.0}, 1: set(), 2: set(), 3: set(), 4: {8.0}}
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['a']: 1.0
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['b']: [3. 6.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['c']: [1. 2.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['d']: [3. 4.]
+[DEBUG] Adicionando custo(s) mínimo(s) para o nó ['e']: 2.0
+[DEBUG] Limite (bound) calculado: 19
+[DEBUG] Podada - Limite 19 excede o melhor custo 16.0.
+9
+
+O melhor caminho é: ['a', 'b', 'd', 'e', 'c', 'a']
+O melhor custo é: 16.0
+Número de podas feitas: 9

@@ -1,54 +1,55 @@
 from ProblemManager.ProblemManager import ProblemManager
 import numpy as np
-import heapq
 import math
 
 BESTCOST = float('inf')
+
 class BranchAndBound:
     def __init__(self, graph, numNodes):
         self.problemManager = ProblemManager()
         self.graph = graph
         self.numNodes = numNodes
         self.solution = None
-        self.bestCost  = BESTCOST     
+        self.bestCost = BESTCOST     
         self.prunes = 0
-        self.iter = 0
         
     def bound(self, partialSolution, costPartialSolution):      
         listMinCosts = []
-        usedCosts = {v: set() for v in range(self.numNodes)}  
-        # print(f"Partial Solution: {partialSolution}")
-        # print(f"Cost Partial Solution: {costPartialSolution}")
+        usedCosts = {v: set() for v in range(self.numNodes)}
+
+        # print(f"\n[DEBUG] Calculando o limite (bound) para a solução parcial: {self.convert_indices_to_labels(partialSolution)}")
+        # print(f"[DEBUG] Custo da solução parcial: {costPartialSolution}")
 
         for idx in range(len(partialSolution)):
             current = partialSolution[idx]
             prev = partialSolution[idx - 1] if idx > 0 else None
             next_ = partialSolution[idx + 1] if idx + 1 < len(partialSolution) else None
 
-            # print(f"Processing vertex {current}, prev: {prev}, next: {next_}")
             if prev is not None:
                 costPrev = float(self.graph[current, prev])  
                 listMinCosts.append(costPrev)
-                usedCosts[current].add(costPrev)  
-                # print(f"Cost to previous vertex ({prev}): {costPrev}")
+                usedCosts[current].add(costPrev)
+                # print(f"[DEBUG] Custo de {self.convert_indices_to_labels([prev])} para {self.convert_indices_to_labels([current])}: {costPrev}")
             if next_ is not None:
                 costNext = float(self.graph[current, next_]) 
                 listMinCosts.append(costNext)
-                usedCosts[current].add(costNext)  
-                # print(f"Cost to next vertex ({next_}): {costNext}")
+                usedCosts[current].add(costNext)
+                # print(f"[DEBUG] Custo de {self.convert_indices_to_labels([current])} para {self.convert_indices_to_labels([next_])}: {costNext}")
+
+        # print(f"[DEBUG] Lista de custos mínimos até agora: {listMinCosts}")
+        # print(f"[DEBUG] Custos utilizados: {usedCosts}")
 
         for i in range(self.numNodes):
             if len(usedCosts[i]) >= 2:
-                # print(f"Vertex {i} fully processed, skipping.")
+                # print(f"[DEBUG] O nó {self.convert_indices_to_labels([i])} já tem pelo menos dois custos utilizados. Pulando.")
                 continue  
 
-            # print(f"Processing remaining vertex {i}.")
             row = self.graph[i, :]  
             row[i] = BESTCOST 
 
             validCosts = [float(cost) for cost in row if cost not in usedCosts[i]]
             if not validCosts:
-                # print(f"No valid costs remaining for vertex {i}. Skipping.")
+                # print(f"[DEBUG] O nó {self.convert_indices_to_labels([i])} não tem custos válidos restantes. Pulando.")
                 continue
 
             if len(usedCosts[i]) == 1:
@@ -64,19 +65,15 @@ class BranchAndBound:
                 usedCosts[i].add(minCost)
                 sumCosts = float(minCost)
 
+            # print(f"[DEBUG] Adicionando custo(s) mínimo(s) para o nó {self.convert_indices_to_labels([i])}: {minCost}")
             listMinCosts.append(sumCosts)
-            # print(f"Valid costs for vertex {i}: {validCosts}")
-            # print(f"Smallest costs for vertex {i}: {minCost}")
-            # print(f"Sum of costs added for vertex {i}: {sumCosts}")
 
-        # print(f"\nList of minimum costs: {listMinCosts}")
-        bound = math.ceil(np.sum(listMinCosts) / 2) # Converte o resultado final
-        # print(f"Calculated bound: {bound}")
+        bound = math.ceil(np.sum(listMinCosts) / 2)
+        # print(f"[DEBUG] Limite (bound) calculado: {bound}")
         return bound
         
     def brandAndBound(self, partialSolution, costPartialSolution):
-        self.iter += 1
-        print(f"Partial Solution: {partialSolution}")
+        # print(f"\n[DEBUG] Explorando a solução parcial: {self.convert_indices_to_labels(partialSolution)}")
         
         if len(partialSolution) == self.numNodes:
             startVertex = partialSolution[0]
@@ -86,55 +83,58 @@ class BranchAndBound:
             if totalCost < self.bestCost:
                 self.bestCost = totalCost
                 self.solution = partialSolution[:]
+                # print(f"[DEBUG] Nova melhor solução encontrada: {self.convert_indices_to_labels(self.solution)} com custo: {self.bestCost}")
             else:
-                print("podou")
+                # print("[DEBUG] Podada - Não foi encontrada uma solução melhor.")
                 self.prunes += 1
+                # print(self.prunes)
             return
-                    
+                  
         for i in range(self.numNodes):
             if i in partialSolution:
-                self.prunes += 1
+                continue
             else:
                 partialSolution.append(i)  
                 lastVertex = partialSolution[-2] if len(partialSolution) > 1 else partialSolution[-1]
-                # print(f"Partial Solution apos adicionar {i}: {partialSolution}")
-                # print(f"lastVertex: {lastVertex}")
-                newCost = costPartialSolution + self.graph[lastVertex, i]  
-                # print(f"newCost: {newCost}")
-                bound = self.bound(partialSolution, newCost,)
+                newCost = costPartialSolution + self.graph[lastVertex, i]
+                # print(f"[DEBUG] Adicionando o vértice {self.convert_indices_to_labels([i])} à solução.")
+                print(f"[DEBUG] Novo custo parcial: {newCost}")
+                bound = self.bound(partialSolution, newCost)
                     
                 if bound < self.bestCost:
+                    # print(f"[DEBUG] Limite {bound} é menor que o melhor custo {self.bestCost}. Explorando mais.")
                     self.brandAndBound(partialSolution, newCost)
                 else:
+                    # print(f"[DEBUG] Podada - Limite {bound} excede o melhor custo {self.bestCost}.")
                     self.prunes += 1
+                    # print(self.prunes)
                     
-                partialSolution.pop()       
-        
+                partialSolution.pop()
+
     def solve(self, problem_path):
-        # problem = self.problemManager.ReadProblem(problem_path)
-
-        self.brandAndBound([], 0)  
-        
+        self.brandAndBound([0], 0)  
         self.solution.append(self.solution[0])
-        print(f"partial solutions: {self.iter}")
+        return self.convert_indices_to_labels(self.solution), self.bestCost, self.prunes
 
-        return self.solution, self.bestCost, self.prunes
-    
+    def convert_indices_to_labels(self, solution):
+        labels = ['a', 'b', 'c', 'd', 'e']
+        return [labels[i] for i in solution]
+
 def main():
     graph = np.array([
-        [0, 10, 15, 20],
-        [10, 0, 35, 25],
-        [15, 35, 0, 30],
-        [20, 25, 30, 0]
-    ], dtype=float) 
+        [0, 3, 1, 5, 8],  # Conexões de "a"
+        [3, 0, 6, 7, 9],  # Conexões de "b"
+        [1, 6, 0, 4, 2],  # Conexões de "c"
+        [5, 7, 4, 0, 3],  # Conexões de "d"
+        [8, 9, 2, 3, 0]   # Conexões de "e"
+    ], dtype=float)
 
-    Solve = BranchAndBound(graph, 4)
+    Solve = BranchAndBound(graph, 5)
 
     bestSolution, bestCost, prunes = Solve.solve(0)
-    print(f"O melhor caminho é: {bestSolution}")
+    print(f"\nO melhor caminho é: {bestSolution}")
     print(f"O melhor custo é: {bestCost}")
     print(f"Número de podas feitas: {prunes}")
-
 
 if __name__ == "__main__":
     main()
