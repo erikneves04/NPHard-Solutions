@@ -13,9 +13,9 @@ class BranchAndBound:
         self.bestCost = BESTCOST     
         self.prunes = 0
         
-    def bound(self, partialSolution):      
+    def bound(self, partialSolution):
         listMinCosts = []
-        usedCosts = {v: set() for v in range(self.numNodes)}
+        usedCostsCount = [0] * self.numNodes  
 
         print(f"\n[DEBUG] Calculando o limite (bound) para a solução parcial: {self.convert_indices_to_labels(partialSolution)}")
 
@@ -25,43 +25,41 @@ class BranchAndBound:
             next_ = partialSolution[idx + 1] if idx + 1 < len(partialSolution) else None
 
             if prev is not None:
-                costPrev = float(self.graph[current, prev])  
+                costPrev = float(self.graph[current, prev])
                 listMinCosts.append(costPrev)
-                usedCosts[current].add(costPrev)
+                usedCostsCount[current] += 1
                 print(f"[DEBUG] Custo de {self.convert_indices_to_labels([prev])} para {self.convert_indices_to_labels([current])}: {costPrev}")
             if next_ is not None:
-                costNext = float(self.graph[current, next_]) 
+                costNext = float(self.graph[current, next_])
                 listMinCosts.append(costNext)
-                usedCosts[current].add(costNext)
+                usedCostsCount[current] += 1
                 print(f"[DEBUG] Custo de {self.convert_indices_to_labels([current])} para {self.convert_indices_to_labels([next_])}: {costNext}")
 
         print(f"[DEBUG] Lista de custos mínimos até agora: {listMinCosts}")
-        print(f"[DEBUG] Custos utilizados: {usedCosts}")
 
         for i in range(self.numNodes):
-            if len(usedCosts[i]) >= 2:
+            if usedCostsCount[i] >= 2:  # Se já tiver pelo menos dois custos utilizados, pula
                 print(f"[DEBUG] O nó {self.convert_indices_to_labels([i])} já tem pelo menos dois custos utilizados. Pulando.")
-                continue  
+                continue
 
-            row = self.graph[i, :]  
-            row[i] = BESTCOST 
+            self.graph[i, i] = BESTCOST
 
-            validCosts = [float(cost) for cost in row if cost not in usedCosts[i]]
+            validCosts = [float(cost) for cost in self.graph[i, :] if usedCostsCount[i] == 0 or cost not in usedCostsCount]
             if not validCosts:
                 print(f"[DEBUG] O nó {self.convert_indices_to_labels([i])} não tem custos válidos restantes. Pulando.")
                 continue
 
-            if len(usedCosts[i]) == 1:
+            if usedCostsCount[i] == 1:
                 minCost = np.partition(validCosts, 0)[0]
             else:
                 minCost = np.partition(validCosts, 1)[:2]
 
             if isinstance(minCost, np.ndarray):
-                for cost in minCost:
-                    usedCosts[i].add(cost)
-                sumCosts = float(np.sum(minCost)) 
+                for _ in minCost:
+                    usedCostsCount[i] += 1  # Incrementa a contagem de custos usados
+                sumCosts = float(np.sum(minCost))
             else:
-                usedCosts[i].add(minCost)
+                usedCostsCount[i] += 1
                 sumCosts = float(minCost)
 
             print(f"[DEBUG] Adicionando custo(s) mínimo(s) para o nó {self.convert_indices_to_labels([i])}: {minCost}")
@@ -70,6 +68,7 @@ class BranchAndBound:
         bound = math.ceil(np.sum(listMinCosts) / 2)
         print(f"[DEBUG] Limite (bound) calculado: {bound}")
         return bound
+
         
     def brandAndBound(self, partialSolution, costPartialSolution):
         print(f"\n[DEBUG] Explorando a solução parcial: {self.convert_indices_to_labels(partialSolution)}")
