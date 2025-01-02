@@ -28,8 +28,8 @@ class Christofides:
 
     def solve(self, problem):
         graph = self.problemManager.ReadProblem(problem)
-        
-        mst, total_weight = self.primAlgorithm.BuildMST(graph)
+
+        mst, _ = self.primAlgorithm.BuildMST(graph)
         matching = self.matchAlgorithm.BuildPerfectMathing(graph, mst)
 
         eulerian_graph = nx.MultiGraph()
@@ -38,4 +38,5 @@ class Christofides:
         eulerian = self.__find_eulerian_circuit(eulerian_graph)
         hamiltonian = self.__convert_to_hamiltonian_circuit(eulerian)
 
+        print(f'Price: {HamiltonianPriceCalculator.Calculate(graph, hamiltonian)}')
         return hamiltonian
