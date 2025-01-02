@@ -51,7 +51,7 @@ class ProblemManager:
                                        (node_coords[i][1] - node_coords[j][1])**2)
                         adjacency_matrix[i, j] = dist
             
-            return adjacency_matrix
+            return adjacency_matrix, num_nodes
 
         except FileNotFoundError:
             raise FileNotFoundError(f"Problem file not found: {path}")
