@@ -27,7 +27,7 @@ class Christofides:
         return hamiltonian_circuit
 
     def solve(self, problem):
-        graph = self.problemManager.ReadProblem(problem)
+        graph, _ = self.problemManager.ReadProblem(problem)
 
         mst, _ = self.primAlgorithm.BuildMST(graph)
         matching = self.matchAlgorithm.BuildPerfectMathing(graph, mst)
