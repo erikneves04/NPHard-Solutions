@@ -33,7 +33,7 @@ def parseArgs():
     parser = argparse.ArgumentParser(description="Aplicação para solução de problemas NP-Dificeis")
 
     parser.add_argument('--max-minutes', type=int, required=False, default=DEFAULT_TIME_LIMITATION, help='Número máximo de minutos para essa execução.')
-    parser.add_argument('--problem-path', type=str, required=True, help='Caminho para o arquivo de entrada com o problema.')
+    parser.add_argument('--problem', type=str, required=True, help='Identificação do arquivo de entrada com o problema.')
     parser.add_argument('--algorithm', type=Algorithms, choices=list(Algorithms), required=True, help='Seleção do algoritmo que será usado para resolver o problema.')
 
     return parser.parse_args() 
@@ -47,19 +47,19 @@ def TimeoutHandler(signum, frame):
     """
     raise TimeoutError("Tempo limite de execução excedido.")
 
-def ExecuteWithTimeout(algorithm_func, problem_path, time_limit):
+def ExecuteWithTimeout(algorithm_func, problem, time_limit):
     """
     Executa a função do algoritmo com limite de tempo.
 
     :param algorithm_func: Função do algoritmo a ser executada.
-    :param problem_path: Caminho para o arquivo do problema.
+    :param problem: Identificação do arquivo do problema.
     :param time_limit: Tempo limite em minutos.
     """
     signal.signal(signal.SIGALRM, TimeoutHandler)
     signal.alarm(time_limit * 60)
 
     try:
-        algorithm_func(problem_path)
+        algorithm_func(problem)
     except TimeoutError as e:
         print(e)
         # TODO: Tratar o erro de timeout (tempo limite de execução excedido)
@@ -76,13 +76,13 @@ def main():
 
     if algorithm_option == Algorithms.BRANCHANDBOUND:
         model = BranchAndBound()
-        ExecuteWithTimeout(model.solve, args.problem_path, args.max_minutes)
+        ExecuteWithTimeout(model.solve, args.problem, args.max_minutes)
     elif algorithm_option == Algorithms.CHRISTOFIDES:
         model = Christofides()
-        ExecuteWithTimeout(model.solve, args.problem_path, args.max_minutes)
+        ExecuteWithTimeout(model.solve, args.problem, args.max_minutes)
     elif algorithm_option == Algorithms.TWICEAROUNDTHETREE:
         model = TwiceAroundTheTree()
-        ExecuteWithTimeout(model.solve, args.problem_path, args.max_minutes)
+        ExecuteWithTimeout(model.solve, args.problem, args.max_minutes)
 
 if __name__ == "__main__":
     main()
