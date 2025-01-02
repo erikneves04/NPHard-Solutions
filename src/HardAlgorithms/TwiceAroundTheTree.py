@@ -3,17 +3,17 @@ import networkx as nx
 import numpy as np
 
 class TwiceAroundTheTree:
-    def __init__(self, graph):
+    def __init__(self):
         self.problemManager = ProblemManager()
-        self.graph = graph
+        self.graph = None
         self.hCycle = []
         self.solutionAprox = 0
         
     def mstPrim(self):
-        return nx.minimum_spanning_tree(self.graph, algorithm='prim', weight='weight')
+        return nx.minimum_spanning_tree(self.graph)
             
     def solve(self, problem_path):
-        # problem = self.problemManager.ReadProblem(problem_path)
+        self.graph = nx.from_numpy_array(self.problemManager.ReadProblem(problem_path)[0])
 
         mstPrim = self.mstPrim()
         path = list(nx.dfs_preorder_nodes(mstPrim, 0))
@@ -21,28 +21,8 @@ class TwiceAroundTheTree:
         
         for i in range(len(self.hCycle) - 1):
             u, v = self.hCycle[i], self.hCycle[i+1]
-            self.solutionAprox += self.graph[u][v]['weight']
-            
-        print("Ciclo Hamiltoniano:", self.hCycle)
-        print("Custo total do ciclo:", self.solutionAprox)         
+            self.solutionAprox += self.graph[u][v]['weight']            
         
-        return self.hCycle, self.solutionAprox
+        print(f"O caminho aproximado é: {self.hCycle}")
+        print(f"O custo do caminho anterior é: {self.solutionAprox}. O custo é aproximado, o custo ótimo é: ")
     
-def main():
-    graph = np.array([
-        [0, 10, 15, 20],
-        [10, 0, 35, 25],
-        [15, 35, 0, 30],
-        [20, 25, 30, 0]
-    ], dtype=float) 
-    
-    graph = nx.from_numpy_array(graph)
-
-    Solve = TwiceAroundTheTree(graph)
-    
-    path, cost = Solve.solve(0)
-    print(f"O caminho de solução aproximada é: {path}")
-    print(f"O custo do caminho é: {cost}")
-    
-if __name__ == "__main__":
-    main()
