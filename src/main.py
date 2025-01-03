@@ -7,6 +7,7 @@ from HardAlgorithms.BranchAndBound import BranchAndBound
 from HardAlgorithms.Christofides import Christofides
 from HardAlgorithms.TwiceAroundTheTree import TwiceAroundTheTree
 from Utils.StatisticsManager import StatisticsManager
+from ProblemManager.ProblemManager import ProblemManager
 
 # Constantes
 DEFAULT_TIME_LIMITATION = 30
@@ -14,6 +15,7 @@ DEFAULT_STATISTICS_FILE_NAME = 'data'
 
 # Serviço de gerenciamento de estatísticas
 STATISTICS_SERVICE = None # Inicializado no main
+PROBLEM_MANAER_SERVICE = ProblemManager()
 
 class Algorithms(Enum):
     """
@@ -47,7 +49,7 @@ def parseArgs():
 
     return parser.parse_args() 
 
-def ExecuteWithTimeout(algorithm_func, problem, time_limit, algorithm_identification):
+def ExecuteWithTimeout(algorithm_func, problem, time_limit, algorithm_identification, graph):
     """
     Executa a função do algoritmo com limite de tempo.
 
@@ -55,29 +57,31 @@ def ExecuteWithTimeout(algorithm_func, problem, time_limit, algorithm_identifica
     :param problem: Identificação do arquivo do problema.
     :param time_limit: Tempo limite em minutos.
     :param algorithm_identification: Enumerador de identificação do algoritmo.
+    :param graph: Grafo com os dados do problema.
     """
 
     def TimeoutHandler(signum, frame):
         raise TimeoutError(f"Execution exceeded the time limit of {time_limit} minutes.")
 
     global STATISTICS_SERVICE
-    STATISTICS_SERVICE
+    graph_size = len(graph)
 
     signal.signal(signal.SIGALRM, TimeoutHandler)
     signal.alarm(time_limit * 60)
 
     try:
         start_time = time.time()
-        solution, space_required = algorithm_func(problem)
+        solution, space_required = algorithm_func(graph)
         time_required = time.time() - start_time
         
-        STATISTICS_SERVICE.AddSolution(problem, solution, str(algorithm_identification), time_required, space_required)
+        STATISTICS_SERVICE.AddSolution(problem, solution, str(algorithm_identification), time_required, space_required, graph_size)
     except TimeoutError as e:
         print(e)
-        STATISTICS_SERVICE.AddTimeoutSolution(problem, str(algorithm_identification), time_limit * 60)
-    except Exception as e:
-        print(e)
+        STATISTICS_SERVICE.AddTimeoutSolution(problem, str(algorithm_identification), time_limit * 60, graph_size)
+    #except Exception as e:
+    #    print(e)
         # Erro inesperado
+    #    STATISTICS_SERVICE.AddTimeoutSolution(problem, str(algorithm_identification), time_limit * 60, graph_size)
     finally:
         signal.alarm(0)
 
@@ -91,18 +95,21 @@ def main():
     global STATISTICS_SERVICE
     STATISTICS_SERVICE = StatisticsManager(args.statistics_file_name)
 
+    # Leitura dos dados do problema
+    graph, _ = PROBLEM_MANAER_SERVICE.ReadProblem(args.problem)
+
     algorithm_option = args.algorithm
     if algorithm_option == Algorithms.ALL:
-        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND)
-        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES)
-        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE)
+        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND, graph)
+        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES, graph)
+        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE, graph)
     
     elif algorithm_option == Algorithms.BRANCHANDBOUND:
-        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND)
+        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND, graph)
     elif algorithm_option == Algorithms.CHRISTOFIDES:
-        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES)
+        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES, graph)
     elif algorithm_option == Algorithms.TWICEAROUNDTHETREE:
-        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE)
+        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE, graph)
 
     STATISTICS_SERVICE.Save()
 

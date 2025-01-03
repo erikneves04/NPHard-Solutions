@@ -7,7 +7,7 @@ class StatisticsManager:
     __optimal_soltions_path = 'Files/Optimal-Solutions.json'
 
     def __init__(self, aggregated_file_name):
-        self.__dataframe = pd.DataFrame(columns=['problem', 'algorithm', 'time-required', 'space-required', 'solution', 'optimal-solution', 'solution-quality'])
+        self.__dataframe = pd.DataFrame(columns=['problem', 'algorithm', 'time-required', 'space-required', 'solution', 'optimal-solution', 'solution-quality', 'problem-size'])
         self.__aggregated_file_path = self.__default_result_directory + '/' + aggregated_file_name + '.csv'
         
         with open(self.__optimal_soltions_path, 'r') as file:
@@ -30,7 +30,7 @@ class StatisticsManager:
         quality = abs(optimal_value - solution) / max(optimal_value, solution)
         return optimal_value, quality
 
-    def __add_dataframe_row__(self, problem, solution, algorithm, time_required, space_required, optimal_solution, solution_quality):
+    def __add_dataframe_row__(self, problem, solution, algorithm, time_required, space_required, optimal_solution, solution_quality, graph_size):
         new_row = {
             'problem': problem, 
             'algorithm': algorithm, 
@@ -38,16 +38,17 @@ class StatisticsManager:
             'space-required': space_required, 
             'solution': solution, 
             'optimal-solution': optimal_solution, 
-            'solution-quality': solution_quality
+            'solution-quality': solution_quality,
+            'problem-size': graph_size
         }
         self.__dataframe.loc[len(self.__dataframe)] = new_row
 
-    def AddTimeoutSolution(self, problem, algorithm, time_required):
+    def AddTimeoutSolution(self, problem, algorithm, time_required, graph_size):
         optimal_value = self.__optimal_solutions.get(problem)
-        self.__add_dataframe_row__(problem, None, algorithm, time_required, None, optimal_value, None)
+        self.__add_dataframe_row__(problem, None, algorithm, time_required, None, optimal_value, None, graph_size)
 
-    def AddSolution(self, problem, solution, algorithm, time_required, space_required):
+    def AddSolution(self, problem, solution, algorithm, time_required, space_required, graph_size):
         optimal, quality = self.__compare_solutions__(problem, solution)
-        self.__add_dataframe_row__(problem, solution, algorithm, time_required, space_required, optimal, quality)
+        self.__add_dataframe_row__(problem, solution, algorithm, time_required, space_required, optimal, quality, graph_size)
 
         

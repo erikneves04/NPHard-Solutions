@@ -3,11 +3,9 @@ import networkx as nx
 from Utils.PrimAlgorithm import PrimAlgorithm
 from Utils.PerfectMatching import PerfectMatching
 from Utils.HamiltonianPriceCalculator import HamiltonianPriceCalculator
-from ProblemManager.ProblemManager import ProblemManager
 
 class Christofides:
     def __init__(self):
-        self.problemManager = ProblemManager()
         self.primAlgorithm = PrimAlgorithm()
         self.matchAlgorithm = PerfectMatching()
 
@@ -26,9 +24,7 @@ class Christofides:
         
         return hamiltonian_circuit
 
-    def solve(self, problem):
-        graph, _ = self.problemManager.ReadProblem(problem)
-
+    def solve(self, graph):
         mst, _ = self.primAlgorithm.BuildMST(graph)
         matching = self.matchAlgorithm.BuildPerfectMathing(graph, mst)
 

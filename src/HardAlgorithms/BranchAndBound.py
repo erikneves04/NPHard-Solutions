@@ -1,4 +1,3 @@
-from ProblemManager.ProblemManager import ProblemManager
 import numpy as np
 import math
 
@@ -6,7 +5,6 @@ BESTCOST = float('inf')
 
 class BranchAndBound:
     def __init__(self):
-        self.problemManager = ProblemManager()
         self.graph = None
         self.numNodes = 0
         self.solution = None
@@ -91,13 +89,14 @@ class BranchAndBound:
                         
                     partialSolution.pop()
 
-    def solve(self, problem_path):
+    def solve(self, graph):
         """
         Resolve o problema de TSP utilizando o algoritmo Branch and Bound.
 
-        :param problem_path: Caminho para o arquivo do problema.
+        :param graph: Grafo com os dados do problema.
         """
-        self.graph, self.numNodes = self.problemManager.ReadProblem(problem_path)
+        self.graph = graph
+        self.numNodes =  len(graph)
         self.brandAndBound([0], 0)
 
         self.solution.append(self.solution[0])

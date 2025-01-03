@@ -1,10 +1,8 @@
-from ProblemManager.ProblemManager import ProblemManager
 import networkx as nx
 import numpy as np
 
 class TwiceAroundTheTree:
     def __init__(self):
-        self.problemManager = ProblemManager()
         self.graph = None
         self.hCycle = []
         self.solutionAprox = 0
@@ -12,8 +10,8 @@ class TwiceAroundTheTree:
     def mstPrim(self):
         return nx.minimum_spanning_tree(self.graph)
             
-    def solve(self, problem_path):
-        self.graph = nx.from_numpy_array(self.problemManager.ReadProblem(problem_path)[0])
+    def solve(self, graph):
+        self.graph = nx.from_numpy_array(graph)
 
         mstPrim = self.mstPrim()
         path = list(nx.dfs_preorder_nodes(mstPrim, 0))
