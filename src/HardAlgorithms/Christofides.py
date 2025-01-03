@@ -24,6 +24,25 @@ class Christofides:
         
         return hamiltonian_circuit
 
+    def __estimate_space_required__(self, graph, mst, matching, hamiltonian_circuit):
+        num_nodes = len(graph.nodes)
+        mst_edges = len(mst)
+        matching_edges = len(matching)
+        eulerian_edges = mst_edges + matching_edges
+        hamiltonian_nodes = len(hamiltonian_circuit)
+        
+        # Aproximações do espaço (em bytes):
+        space_per_node = 8 
+        space_per_edge = 16
+        
+        # Espaço total (em bytes)
+        total_space = (
+            num_nodes * space_per_node + 
+            eulerian_edges * space_per_edge + 
+            hamiltonian_nodes * space_per_node 
+        )
+        return total_space
+
     def solve(self, graph):
         mst, _ = self.primAlgorithm.BuildMST(graph)
         matching = self.matchAlgorithm.BuildPerfectMathing(graph, mst)
@@ -34,6 +53,7 @@ class Christofides:
         eulerian = self.__find_eulerian_circuit(eulerian_graph)
         hamiltonian = self.__convert_to_hamiltonian_circuit(eulerian)
         solution = HamiltonianPriceCalculator.Calculate(graph, hamiltonian)
-        space_required = 0 # TODO: implementar o cálculo de espaço necessário
+
+        space_required = self.__estimate_space_required__(graph, mst, matching, hamiltonian)
 
         return solution, space_required
