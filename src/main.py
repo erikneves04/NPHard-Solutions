@@ -1,13 +1,18 @@
 import argparse
 import signal
+import time
 from enum import Enum
 
 from HardAlgorithms.BranchAndBound import BranchAndBound
 from HardAlgorithms.Christofides import Christofides
 from HardAlgorithms.TwiceAroundTheTree import TwiceAroundTheTree
+from Utils.StatisticsManager import StatisticsManager
 
 # Constantes
 DEFAULT_TIME_LIMITATION = 30
+
+# Serviço de gerenciamento de estatísticas
+STATISTICS_SERVICE = None # Inicializado no main
 
 class Algorithms(Enum):
     """
@@ -16,10 +21,12 @@ class Algorithms(Enum):
     BRANCHANDBOUND: Algoritmo de branch and bound.
     CHRISTOFIDES: Algoritmo de Christofides.
     TWICEAROUNDTHETREE: Algoritmo de twice around the tree.
+    ALL: Executa os três algoritmos.
     """
     BRANCHANDBOUND = "branch-and-bound"
     CHRISTOFIDES = "christofides"
     TWICEAROUNDTHETREE = "twice-around-the-tree"
+    ALL = 'all'
 
     def __str__(self):
         return self.value
@@ -35,34 +42,38 @@ def parseArgs():
     parser.add_argument('--max-minutes', type=int, required=False, default=DEFAULT_TIME_LIMITATION, help='Número máximo de minutos para essa execução.')
     parser.add_argument('--problem', type=str, required=True, help='Identificação do arquivo de entrada com o problema.')
     parser.add_argument('--algorithm', type=Algorithms, choices=list(Algorithms), required=True, help='Seleção do algoritmo que será usado para resolver o problema.')
+    parser.add_argument('--statisticas_file_name', type=str, required=False, default='data.csv', help='Nome do arquivo com as estatísticas coletadas.')
 
     return parser.parse_args() 
 
-def TimeoutHandler(signum, frame):
-    """
-    Manipulador de sinal para o tempo limite.
-
-    :param signum: Sinal recebido.
-    :param frame: Frame de execução atual.
-    """
-    raise TimeoutError("Tempo limite de execução excedido.")
-
-def ExecuteWithTimeout(algorithm_func, problem, time_limit):
+def ExecuteWithTimeout(algorithm_func, problem, time_limit, algorithm_identification):
     """
     Executa a função do algoritmo com limite de tempo.
 
     :param algorithm_func: Função do algoritmo a ser executada.
     :param problem: Identificação do arquivo do problema.
     :param time_limit: Tempo limite em minutos.
+    :param algorithm_identification: Enumerador de identificação do algoritmo.
     """
+
+    def TimeoutHandler():
+        raise TimeoutError(f"Execution exceeded the time limit of {time_limit} minutes.")
+
+    global STATISTICS_SERVICE
+    STATISTICS_SERVICE
+
     signal.signal(signal.SIGALRM, TimeoutHandler)
     signal.alarm(time_limit * 60)
 
     try:
-        algorithm_func(problem)
+        start_time = time.time()
+        solution, space_required = algorithm_func(problem)
+        time_required = time.time() - start_time
+        
+        STATISTICS_SERVICE.AddSolution(problem, solution, str(algorithm_identification), time_required, space_required)
     except TimeoutError as e:
         print(e)
-        # TODO: Tratar o erro de timeout (tempo limite de execução excedido)
+        STATISTICS_SERVICE.AddTimeoutSolution(problem, str(algorithm_identification), time_limit * 60)
     finally:
         signal.alarm(0)
 
@@ -72,17 +83,18 @@ def main():
     """
     args = parseArgs()
 
+    # Inicialização do serviço de gerenciamento de estatísticas
+    global STATISTICS_SERVICE
+    STATISTICS_SERVICE = StatisticsManager(args.statisticas_file_name)
+
     algorithm_option = args.algorithm
 
     if algorithm_option == Algorithms.BRANCHANDBOUND:
-        model = BranchAndBound()
-        ExecuteWithTimeout(model.solve, args.problem, args.max_minutes)
+        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes)
     elif algorithm_option == Algorithms.CHRISTOFIDES:
-        model = Christofides()
-        ExecuteWithTimeout(model.solve, args.problem, args.max_minutes)
+        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes)
     elif algorithm_option == Algorithms.TWICEAROUNDTHETREE:
-        model = TwiceAroundTheTree()
-        ExecuteWithTimeout(model.solve, args.problem, args.max_minutes)
+        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes)
 
 if __name__ == "__main__":
     main()
