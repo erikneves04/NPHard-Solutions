@@ -43,7 +43,7 @@ def parseArgs():
     parser.add_argument('--max-minutes', type=int, required=False, default=DEFAULT_TIME_LIMITATION, help='Número máximo de minutos para essa execução.')
     parser.add_argument('--problem', type=str, required=True, help='Identificação do arquivo de entrada com o problema.')
     parser.add_argument('--algorithm', type=Algorithms, choices=list(Algorithms), required=True, help='Seleção do algoritmo que será usado para resolver o problema.')
-    parser.add_argument('--statisticas-file-name', type=str, required=False, default=DEFAULT_STATISTICS_FILE_NAME, help='Nome do arquivo (sem extensão) com as estatísticas coletadas.')
+    parser.add_argument('--statistics-file-name', type=str, required=False, default=DEFAULT_STATISTICS_FILE_NAME, help='Nome do arquivo (sem extensão) com as estatísticas coletadas.')
 
     return parser.parse_args() 
 
@@ -86,7 +86,7 @@ def main():
 
     # Inicialização do serviço de gerenciamento de estatísticas
     global STATISTICS_SERVICE
-    STATISTICS_SERVICE = StatisticsManager(args.statisticas_file_name)
+    STATISTICS_SERVICE = StatisticsManager(args.statistics_file_name)
 
     algorithm_option = args.algorithm
     if algorithm_option == Algorithms.ALL:
