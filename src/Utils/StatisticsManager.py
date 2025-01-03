@@ -4,7 +4,7 @@ import os
 
 class StatisticsManager:
     __default_result_directory = 'Results'
-    __optimal_soltions_path = 'Files\Optimal-Solutions.json'
+    __optimal_soltions_path = 'Files/Optimal-Solutions.json'
 
     def __init__(self, aggregated_file_name):
         self.__dataframe = pd.DataFrame(columns=['problem', 'algorithm', 'time-required', 'space-required', 'solution', 'optimal-solution', 'solution-quality'])
@@ -20,7 +20,7 @@ class StatisticsManager:
         if not os.path.exists(self.__default_result_directory):
             os.makedirs(self.__default_result_directory)
         
-        if os.path.exists(self.aggregated_file_path):
+        if os.path.exists(self.__aggregated_file_path):
             existing_data = pd.read_csv(self.__aggregated_file_path)
             combined_data = pd.concat([existing_data, self.__dataframe], ignore_index=True)
         else:
