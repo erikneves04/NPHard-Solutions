@@ -90,11 +90,11 @@ def main():
     algorithm_option = args.algorithm
 
     if algorithm_option == Algorithms.BRANCHANDBOUND:
-        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes)
+        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND)
     elif algorithm_option == Algorithms.CHRISTOFIDES:
-        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes)
+        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES)
     elif algorithm_option == Algorithms.TWICEAROUNDTHETREE:
-        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes)
+        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE)
 
 if __name__ == "__main__":
     main()

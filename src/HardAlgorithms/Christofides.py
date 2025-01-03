@@ -37,6 +37,7 @@ class Christofides:
         
         eulerian = self.__find_eulerian_circuit(eulerian_graph)
         hamiltonian = self.__convert_to_hamiltonian_circuit(eulerian)
+        solution = HamiltonianPriceCalculator.Calculate(graph, hamiltonian)
+        space_required = 0 # TODO: implementar o cálculo de espaço necessário
 
-        print(f'Price: {HamiltonianPriceCalculator.Calculate(graph, hamiltonian)}')
-        return hamiltonian
+        return solution, space_required

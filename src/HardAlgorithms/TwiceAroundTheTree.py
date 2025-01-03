@@ -25,4 +25,7 @@ class TwiceAroundTheTree:
         
         print(f"O caminho aproximado é: {self.hCycle}")
         print(f"O custo do caminho anterior é: {self.solutionAprox}. O custo é aproximado, o custo ótimo é: ")
+
+        # TODO: retornar os valores correspondentes ÓTIMO, ESPAÇO_NECESSÁRIO
+        return 0, 0
     
