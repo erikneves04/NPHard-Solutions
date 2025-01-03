@@ -25,7 +25,7 @@ class Christofides:
         return hamiltonian_circuit
 
     def __estimate_space_required__(self, graph, mst, matching, hamiltonian_circuit):
-        num_nodes = len(graph.nodes)
+        num_nodes = len(graph)
         mst_edges = len(mst)
         matching_edges = len(matching)
         eulerian_edges = mst_edges + matching_edges
