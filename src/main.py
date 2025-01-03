@@ -43,7 +43,7 @@ def parseArgs():
     parser.add_argument('--max-minutes', type=int, required=False, default=DEFAULT_TIME_LIMITATION, help='Número máximo de minutos para essa execução.')
     parser.add_argument('--problem', type=str, required=True, help='Identificação do arquivo de entrada com o problema.')
     parser.add_argument('--algorithm', type=Algorithms, choices=list(Algorithms), required=True, help='Seleção do algoritmo que será usado para resolver o problema.')
-    parser.add_argument('--statisticas_file_name', type=str, required=False, default=DEFAULT_STATISTICS_FILE_NAME, help='Nome do arquivo (sem extensão) com as estatísticas coletadas.')
+    parser.add_argument('--statisticas-file-name', type=str, required=False, default=DEFAULT_STATISTICS_FILE_NAME, help='Nome do arquivo (sem extensão) com as estatísticas coletadas.')
 
     return parser.parse_args() 
 
@@ -57,7 +57,7 @@ def ExecuteWithTimeout(algorithm_func, problem, time_limit, algorithm_identifica
     :param algorithm_identification: Enumerador de identificação do algoritmo.
     """
 
-    def TimeoutHandler():
+    def TimeoutHandler(signum, frame):
         raise TimeoutError(f"Execution exceeded the time limit of {time_limit} minutes.")
 
     global STATISTICS_SERVICE
@@ -89,8 +89,12 @@ def main():
     STATISTICS_SERVICE = StatisticsManager(args.statisticas_file_name)
 
     algorithm_option = args.algorithm
-
-    if algorithm_option == Algorithms.BRANCHANDBOUND:
+    if algorithm_option == Algorithms.ALL:
+        ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND)
+        ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES)
+        ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE)
+    
+    elif algorithm_option == Algorithms.BRANCHANDBOUND:
         ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND)
     elif algorithm_option == Algorithms.CHRISTOFIDES:
         ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES)
