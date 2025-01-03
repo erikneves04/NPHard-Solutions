@@ -100,9 +100,9 @@ class BranchAndBound:
         self.brandAndBound([0], 0)
 
         self.solution.append(self.solution[0])
-        print(f"O melhor caminho é: {self.solution}")
-        print(f"O custo do caminho anterior é: {self.cost}")
-        print(f"O número de podas feitas foi: {self.prunes}")
+        #print(f"O melhor caminho é: {self.solution}")
+        #print(f"O custo do caminho anterior é: {self.cost}")
+        #print(f"O número de podas feitas foi: {self.prunes}")
 
         # TODO: retornar os valores correspondentes ÓTIMO, ESPAÇO_NECESSÁRIO
         return self.solution, 0

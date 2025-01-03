@@ -21,8 +21,8 @@ class TwiceAroundTheTree:
             u, v = self.hCycle[i], self.hCycle[i+1]
             self.solutionAprox += self.graph[u][v]['weight']            
         
-        print(f"O caminho aproximado é: {self.hCycle}")
-        print(f"O custo do caminho anterior é: {self.solutionAprox}. O custo é aproximado, o custo ótimo é: ")
+        #print(f"O caminho aproximado é: {self.hCycle}")
+        #print(f"O custo do caminho anterior é: {self.solutionAprox}. O custo é aproximado, o custo ótimo é: ")
 
         # TODO: retornar os valores correspondentes ÓTIMO, ESPAÇO_NECESSÁRIO
         return 0, 0
