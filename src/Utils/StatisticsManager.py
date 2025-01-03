@@ -13,10 +13,7 @@ class StatisticsManager:
         with open(self.__optimal_soltions_path, 'r') as file:
             self.__optimal_solutions = json.load(file) 
 
-    def __del__(self):
-        self.__save__()
-
-    def __save__(self):
+    def Save(self):
         if not os.path.exists(self.__default_result_directory):
             os.makedirs(self.__default_result_directory)
         

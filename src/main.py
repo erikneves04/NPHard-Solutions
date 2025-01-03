@@ -10,6 +10,7 @@ from Utils.StatisticsManager import StatisticsManager
 
 # Constantes
 DEFAULT_TIME_LIMITATION = 30
+DEFAULT_STATISTICS_FILE_NAME = 'data'
 
 # Serviço de gerenciamento de estatísticas
 STATISTICS_SERVICE = None # Inicializado no main
@@ -42,7 +43,7 @@ def parseArgs():
     parser.add_argument('--max-minutes', type=int, required=False, default=DEFAULT_TIME_LIMITATION, help='Número máximo de minutos para essa execução.')
     parser.add_argument('--problem', type=str, required=True, help='Identificação do arquivo de entrada com o problema.')
     parser.add_argument('--algorithm', type=Algorithms, choices=list(Algorithms), required=True, help='Seleção do algoritmo que será usado para resolver o problema.')
-    parser.add_argument('--statisticas_file_name', type=str, required=False, default='data.csv', help='Nome do arquivo com as estatísticas coletadas.')
+    parser.add_argument('--statisticas_file_name', type=str, required=False, default=DEFAULT_STATISTICS_FILE_NAME, help='Nome do arquivo (sem extensão) com as estatísticas coletadas.')
 
     return parser.parse_args() 
 
@@ -95,6 +96,8 @@ def main():
         ExecuteWithTimeout(Christofides().solve, args.problem, args.max_minutes, Algorithms.CHRISTOFIDES)
     elif algorithm_option == Algorithms.TWICEAROUNDTHETREE:
         ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE)
+
+    STATISTICS_SERVICE.Save()
 
 if __name__ == "__main__":
     main()
