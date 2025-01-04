@@ -17,6 +17,9 @@ class StatisticsManager:
         if not os.path.exists(self.__default_result_directory):
             os.makedirs(self.__default_result_directory)
         
+        if len(self.__dataframe) == 0:
+            return
+
         if os.path.exists(self.__aggregated_file_path):
             existing_data = pd.read_csv(self.__aggregated_file_path)
             combined_data = pd.concat([existing_data, self.__dataframe], ignore_index=True)
