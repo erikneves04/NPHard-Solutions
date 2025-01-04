@@ -11,7 +11,7 @@ class BranchAndBound:
         self.cost = BESTCOST     
         self.prunes = 0
         
-    def bound(self, partialSolution):
+    def __bound(self, partialSolution):
         listMinCosts = []
         usedCostsCount = [0] * self.numNodes  
 
@@ -58,7 +58,7 @@ class BranchAndBound:
         return bound
 
         
-    def brandAndBound(self, partialSolution, costPartialSolution):
+    def __brand_and_bound(self, partialSolution, costPartialSolution):
         startVertex = partialSolution[0]            
         for i in range(self.numNodes):
             if i in partialSolution:
@@ -80,14 +80,35 @@ class BranchAndBound:
                     partialSolution.append(i)  
                     lastVertex = partialSolution[-2] if len(partialSolution) > 1 else partialSolution[-1]
                     newCost = costPartialSolution + self.graph[lastVertex, i]
-                    bound = self.bound(partialSolution)
+                    bound = self.__bound(partialSolution)
                         
                     if bound < self.cost:
-                        self.brandAndBound(partialSolution, newCost)
+                        self.__brand_and_bound(partialSolution, newCost)
                     else:
                         self.prunes += 1
                         
                     partialSolution.pop()
+    def __estimate_space_required_for_partial_solution__(self, partial_solution):
+        partial_solution_nodes = len(partial_solution)
+        space_per_node = 8
+        
+        self.total_space_partials_solutions += partial_solution_nodes * space_per_node
+                    
+    def __estimate_space_required__(self, graph):
+        num_nodes = len(graph)
+        
+        # Aproximação do espaço gasto por todas as soluções parciais
+        total_space_partials_solutions = num_nodes**2 * space_per_node      
+        
+        # Aproximações do espaço (em bytes):
+        space_per_node = 8 
+        
+        # Espaço total (em bytes)
+        total_space = (
+            total_space_partials_solutions +
+            num_nodes * space_per_node 
+        )
+        return total_space
 
     def solve(self, graph):
         """
@@ -97,13 +118,10 @@ class BranchAndBound:
         """
         self.graph = graph
         self.numNodes =  len(graph)
-        self.brandAndBound([0], 0)
+        self.__brand_and_bound([0], 0)
 
         self.solution.append(self.solution[0])
-        #print(f"O melhor caminho é: {self.solution}")
-        #print(f"O custo do caminho anterior é: {self.cost}")
-        #print(f"O número de podas feitas foi: {self.prunes}")
-
-        # TODO: retornar os valores correspondentes ÓTIMO, ESPAÇO_NECESSÁRIO
-        return self.solution, 0
+        space_required = self.__estimate_space_required__(graph)
+        
+        return self.solution, space_required
         
