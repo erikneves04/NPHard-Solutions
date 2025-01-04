@@ -2,3 +2,4 @@ pytest
 argparse
 numpy
 networkx
+pandas
