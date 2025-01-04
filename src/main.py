@@ -81,7 +81,7 @@ def ExecuteWithTimeout(algorithm_func, problem, time_limit, algorithm_identifica
     except Exception as e:
         print(e)
         # Erro inesperado
-        STATISTICS_SERVICE.AddTimeoutSolution(problem, str(algorithm_identification), time_limit * 60, graph_size)
+        STATISTICS_SERVICE.AddTimeoutSolution(problem, str(algorithm_identification), -1, graph_size)
     finally:
         signal.alarm(0)
 
