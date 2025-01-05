@@ -1,10 +1,18 @@
+import heapq
 import numpy as np
 import math
 
 BESTCOST = float('inf')
 
 class BranchAndBound:
+    """
+    Classe que implementa o algoritmo Branch and Bound para resolver o problema do Caixeiro Viajante (TSP).
+    """
     def __init__(self):
+        """
+        Inicializa a classe com um grafo vazio, custo de solução infinito,
+        vetor de soluções vazio, e 0 podas.
+        """
         self.graph = None
         self.numNodes = 0
         self.solution = None
@@ -12,8 +20,15 @@ class BranchAndBound:
         self.prunes = 0
         
     def __bound(self, partialSolution):
+        """
+        Calcula o bound para uma solução parcial.
+
+        :param partialSolution: Lista representando a solução parcial (sequência de nós).
+        :return: Valor do bound estimado para a solução parcial.
+        """        
         listMinCosts = []
-        usedCostsCount = [0] * self.numNodes  
+        usedEdges = []  
+        usedCostsCount = [0] * self.numNodes
 
         for idx in range(len(partialSolution)):
             current = partialSolution[idx]
@@ -23,71 +38,77 @@ class BranchAndBound:
             if prev is not None:
                 costPrev = float(self.graph[current, prev])
                 listMinCosts.append(costPrev)
+                usedEdges.append([current, prev])
                 usedCostsCount[current] += 1
+
             if next_ is not None:
                 costNext = float(self.graph[current, next_])
                 listMinCosts.append(costNext)
+                usedEdges.append([current, next_])
                 usedCostsCount[current] += 1
 
         for i in range(self.numNodes):
-            if usedCostsCount[i] >= 2: 
+            if usedCostsCount[i] >= 2:
                 continue
-
+            
             self.graph[i, i] = BESTCOST
 
-            validCosts = [float(cost) for cost in self.graph[i, :] if usedCostsCount[i] == 0 or cost not in usedCostsCount]
-            if not validCosts:
-                continue
-
             if usedCostsCount[i] == 1:
-                minCost = np.partition(validCosts, 0)[0]
+                validCosts = [float(self.graph[i, j]) for j in range(self.numNodes) if [i, j] not in usedEdges and i != j]
+                minCost = min(validCosts)  
+                listMinCosts.append(minCost)
             else:
-                minCost = np.partition(validCosts, 1)[:2]
-
-            if isinstance(minCost, np.ndarray):
-                for _ in minCost:
-                    usedCostsCount[i] += 1  
-                sumCosts = float(np.sum(minCost))
-            else:
-                usedCostsCount[i] += 1
-                sumCosts = float(minCost)
+                validCosts = [float(self.graph[i, j]) for j in range(self.numNodes) if [i, j] not in usedEdges and i != j]
+                minCosts = sorted(validCosts)[:2]  
+                listMinCosts.extend(minCosts)  
                 
-            listMinCosts.append(sumCosts)
-
-        bound = math.ceil(np.sum(listMinCosts) / 2)
+        bound = math.ceil(np.sum(listMinCosts) / 2)        
         return bound
-
-        
+    
     def __brand_and_bound(self, partialSolution, costPartialSolution):
-        startVertex = partialSolution[0]            
-        for i in range(self.numNodes):
-            if i in partialSolution:
+        startVertex = partialSolution[0]
+        
+        queue = []
+        initialBound = self.__bound(partialSolution)
+        heapq.heappush(queue, (initialBound, partialSolution, costPartialSolution))  
+        
+        while queue:
+            currentBound, currentSolution, currentCost = heapq.heappop(queue)            
+            if len(currentSolution) == self.numNodes:
+                totalCost = currentCost + self.graph[currentSolution[-1], startVertex]                
+                if totalCost < self.cost:
+                    self.cost = totalCost
+                    self.solution = currentSolution[:]
+                else:
+                    self.prunes += 1
                 continue
-            else:
-                if len(partialSolution) + 1 == self.numNodes:
-                    partialSolution.append(i)
-                    endVertex = partialSolution[-1]
-                    lastVertex = partialSolution[-2]
-                    totalCost = costPartialSolution + self.graph[lastVertex,endVertex] + self.graph[endVertex, startVertex]
-                    if totalCost < self.cost:
-                        self.cost = totalCost
-                        self.solution = partialSolution[:]
-                    else:
-                        self.prunes += 1
-                    partialSolution.pop()
-                    return                    
-                else:   
-                    partialSolution.append(i)  
-                    lastVertex = partialSolution[-2] if len(partialSolution) > 1 else partialSolution[-1]
-                    newCost = costPartialSolution + self.graph[lastVertex, i]
-                    bound = self.__bound(partialSolution)
+            
+            if len(currentSolution) == self.numNodes - 1:
+                for i in range(self.numNodes):
+                    if i not in currentSolution:
+                        totalCost = currentCost + self.graph[currentSolution[-1], i] + self.graph[i, startVertex]
+                        if totalCost < self.cost:
+                            self.cost = totalCost
+                            self.solution = currentSolution + [i, startVertex]
+                        else:
+                            self.prunes += 1
+                continue
                         
-                    if bound < self.cost:
-                        self.__brand_and_bound(partialSolution, newCost)
-                    else:
-                        self.prunes += 1
-                        
-                    partialSolution.pop()
+            
+            for i in range(self.numNodes):
+                if i in currentSolution:
+                    continue
+                print(currentSolution)
+                newSolution = currentSolution + [i]
+                newCost = currentCost + self.graph[currentSolution[-1], i]
+                
+                bound = self.__bound(newSolution)
+                
+                if bound < self.cost:
+                    heapq.heappush(queue, (bound, newSolution, newCost))
+                else:
+                    self.prunes += 1
+                    
     def __estimate_space_required_for_partial_solution__(self, partial_solution):
         partial_solution_nodes = len(partial_solution)
         space_per_node = 8
@@ -95,13 +116,19 @@ class BranchAndBound:
         self.total_space_partials_solutions += partial_solution_nodes * space_per_node
                     
     def __estimate_space_required__(self, graph):
+        """
+        Calcula uma estimativa do espaço necessário gasto para resolver
+        a instância atual do problema
+
+        :param graph: Grafo com os dados do problema.
+        """
         num_nodes = len(graph)
-        
-        # Aproximação do espaço gasto por todas as soluções parciais
-        total_space_partials_solutions = num_nodes**2 * space_per_node      
-        
+                
         # Aproximações do espaço (em bytes):
         space_per_node = 8 
+        
+        # Aproximação do espaço gasto por todas as soluções parciais
+        total_space_partials_solutions = num_nodes**2 * space_per_node  
         
         # Espaço total (em bytes)
         total_space = (
@@ -119,8 +146,7 @@ class BranchAndBound:
         self.graph = graph
         self.numNodes =  len(graph)
         self.__brand_and_bound([0], 0)
-
-        self.solution.append(self.solution[0])
+        
         space_required = self.__estimate_space_required__(graph)
         
         return self.solution, space_required
