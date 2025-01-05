@@ -23,7 +23,7 @@ class BranchAndBound:
         """
         Calcula o bound para uma solução parcial.
 
-        :param partialSolution: Lista representando a solução parcial (sequência de nós).
+        :param partialSolution: Vetor representando a solução parcial (sequência de nós).
         :return: Valor do bound estimado para a solução parcial.
         """        
         listMinCosts = []
@@ -66,6 +66,12 @@ class BranchAndBound:
         return bound
     
     def __brand_and_bound(self, partialSolution, costPartialSolution):
+        """
+        Branch and Bound para encontrar a solução ótima.
+
+        :param partialSolution: Lista representando a solução parcial inicial.
+        :param costPartialSolution: Custo da solução parcial inicial.
+        """
         startVertex = partialSolution[0]
         
         queue = []
@@ -109,18 +115,13 @@ class BranchAndBound:
                 else:
                     self.prunes += 1
                     
-    def __estimate_space_required_for_partial_solution__(self, partial_solution):
-        partial_solution_nodes = len(partial_solution)
-        space_per_node = 8
-        
-        self.total_space_partials_solutions += partial_solution_nodes * space_per_node
-                    
     def __estimate_space_required__(self, graph):
         """
         Calcula uma estimativa do espaço necessário gasto para resolver
         a instância atual do problema
 
         :param graph: Grafo com os dados do problema.
+        :return total_space: Espaço estimado total gasto.
         """
         num_nodes = len(graph)
                 
@@ -142,6 +143,8 @@ class BranchAndBound:
         Resolve o problema de TSP utilizando o algoritmo Branch and Bound.
 
         :param graph: Grafo com os dados do problema.
+        :return solution: Solução ótima para o problema.
+        :retunr space_required: Espaço total gasto nessa instância.
         """
         self.graph = graph
         self.numNodes =  len(graph)
