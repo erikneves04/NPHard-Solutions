@@ -80,15 +80,6 @@ class BranchAndBound:
         
         while queue:
             currentBound, currentSolution, currentCost = heapq.heappop(queue)            
-            if len(currentSolution) == self.numNodes:
-                totalCost = currentCost + self.graph[currentSolution[-1], startVertex]                
-                if totalCost < self.cost:
-                    self.cost = totalCost
-                    self.solution = currentSolution[:]
-                else:
-                    self.prunes += 1
-                continue
-            
             if len(currentSolution) == self.numNodes - 1:
                 for i in range(self.numNodes):
                     if i not in currentSolution:
@@ -104,7 +95,6 @@ class BranchAndBound:
             for i in range(self.numNodes):
                 if i in currentSolution:
                     continue
-                print(currentSolution)
                 newSolution = currentSolution + [i]
                 newCost = currentCost + self.graph[currentSolution[-1], i]
                 
