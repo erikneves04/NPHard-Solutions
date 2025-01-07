@@ -13,7 +13,7 @@ from ProblemManager.ProblemManager import ProblemManager
 DEFAULT_TIME_LIMITATION = 30
 DEFAULT_STATISTICS_FILE_NAME = 'data'
 
-# Serviço de gerenciamento de estatísticas
+# Serviços auxiliares
 STATISTICS_SERVICE = None # Inicializado no main
 PROBLEM_MANAER_SERVICE = ProblemManager()
 
