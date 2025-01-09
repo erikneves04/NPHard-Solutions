@@ -4,9 +4,9 @@
 directory="Files/Problems"
 
 # Variáveis de ambiente
-export MAX_MINUTES=1
-export STATISTICS_FILE_NAME="test"
-export ALGORITHM="all"
+export MAX_MINUTES=30
+export STATISTICS_FILE_NAME="SimulationV1-bnb-laboratory"
+export ALGORITHM="branch-and-bound"
 
 for file in "$directory"/*; do
     if [ -f "$file" ]; then
