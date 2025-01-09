@@ -7,13 +7,13 @@ from HardAlgorithms.BranchAndBound import BranchAndBound
 from HardAlgorithms.Christofides import Christofides
 from HardAlgorithms.TwiceAroundTheTree import TwiceAroundTheTree
 from Utils.StatisticsManager import StatisticsManager
-from ProblemManager.ProblemManager import ProblemManager
+from Utils.ProblemManager import ProblemManager
 
 # Constantes
 DEFAULT_TIME_LIMITATION = 30
 DEFAULT_STATISTICS_FILE_NAME = 'data'
 
-# Serviços auxiliares
+# Serviço de gerenciamento de estatísticas
 STATISTICS_SERVICE = None # Inicializado no main
 PROBLEM_MANAER_SERVICE = ProblemManager()
 
@@ -98,6 +98,7 @@ def main():
     # Leitura dos dados do problema
     graph, _ = PROBLEM_MANAER_SERVICE.ReadProblem(args.problem)
 
+    # Execução do algoritmo selecionado
     algorithm_option = args.algorithm
     if algorithm_option == Algorithms.ALL:
         ExecuteWithTimeout(BranchAndBound().solve, args.problem, args.max_minutes, Algorithms.BRANCHANDBOUND, graph)
@@ -111,6 +112,7 @@ def main():
     elif algorithm_option == Algorithms.TWICEAROUNDTHETREE:
         ExecuteWithTimeout(TwiceAroundTheTree().solve, args.problem, args.max_minutes, Algorithms.TWICEAROUNDTHETREE, graph)
 
+    # Salva as estatísticas 
     STATISTICS_SERVICE.Save()
 
 if __name__ == "__main__":
