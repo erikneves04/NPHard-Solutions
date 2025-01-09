@@ -1,9 +1,9 @@
 class PrimAlgorithm:
     def BuildMST(self, graph):
         """
-        Finds the Minimum Spanning Tree (MST) using Prim's Algorithm.
-        :return: A list of edges in the MST and the total weight.
-        :param adjacency_matrix: A square numpy array representing the graph.
+        Encontra a Árvore Geradora Mínima (MST) usando o Algoritmo de Prim.
+        :return: Uma lista de arestas na MST e o peso total.
+        :param adjacency_matrix: Um array quadrado do numpy representando o grafo.
         """
 
         self.graph = graph
