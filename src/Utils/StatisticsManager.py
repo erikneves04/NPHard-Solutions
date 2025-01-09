@@ -68,7 +68,7 @@ class StatisticsManager:
                 - quality (float): Qualidade relativa da solução obtida.
         """
         optimal_value = self.__optimal_solutions.get(problem)
-        quality = abs(optimal_value - solution) / max(optimal_value, solution)
+        quality = abs((optimal_value - optimal_value) / optimal_value)
         return optimal_value, quality
 
     def __add_dataframe_row__(self, problem, solution, algorithm, time_required, 
